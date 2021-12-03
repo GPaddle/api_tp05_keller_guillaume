@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Application\Middleware\SessionMiddleware;
 use Slim\App;
+use Slim\Exception\HttpException;
 use Tuupola\Middleware\JwtAuthentication;
 
 return function (App $app) {
@@ -12,17 +13,20 @@ return function (App $app) {
     $app->add(
         new JwtAuthentication(
             [
-                "path" => ["/api/users"],
-                "ignore" => ["/api/home"],
+                "path" => ["/api"],
+                "ignore" => ["/api/login"],
                 "attribute" => "token",
                 "secure" => false,
                 "header" => "Authorization",
                 "algorithm" => ["HS256"],
                 'secret' => getenv('JWT_SECRET'),
+
                 "error" => function ($response, $arguments) {
-                    $data = array('ERREUR' => 'Connexion', 'ERREUR' => 'JWT Non valide');
-                    $response = $response->withStatus(401);
-                    return $response->withHeader("Content-Type", "application/json")->getBody()->write(json_encode($data));
+                    $data["status"] = "error";
+                    $data["message"] = $arguments["message"];
+                    return $response
+                        ->withHeader("Content-Type", "application/json")
+                        ->getBody()->write(json_encode($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
                 }
             ]
         )

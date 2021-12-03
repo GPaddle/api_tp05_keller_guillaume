@@ -6,4 +6,6 @@
 !/logs/README.md
 .phpunit.result.cache
 
-setup.sh
+*.sh
+
+.env

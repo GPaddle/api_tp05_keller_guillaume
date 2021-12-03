@@ -10,7 +10,7 @@ services:
         working_dir: /var/www
         command: php -S 0.0.0.0:8080 -t public
         environment:
-            - JWT_SECRET=QSDKLMAZEIOPWXCVNB
+            - JWT_SECRET=${JWT_SECRET}
             - docker="true"
         ports:
             - 8080:8080
