@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Application\Actions;
@@ -110,6 +111,24 @@ abstract class Action
     }
 
     /**
+     * @param array|object|null $data
+     * @param int $statusCode
+     * @return Response
+     */
+    protected function respondWithDataAndHeaders($data = null, $headers = null, int $statusCode = 200): Response
+    {
+        $payload = new ActionPayload($statusCode, $data);
+
+        $response = $this->respond($payload);
+
+        foreach ($headers as $header) {
+            $response = $response->withHeader($header[0], $header[1]);
+        }
+
+        return $response;
+    }
+
+    /**
      * @param ActionPayload $payload
      * @return Response
      */
@@ -119,7 +138,7 @@ abstract class Action
         $this->response->getBody()->write($json);
 
         return $this->response
-                    ->withHeader('Content-Type', 'application/json')
-                    ->withStatus($payload->getStatusCode());
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus($payload->getStatusCode());
     }
 }

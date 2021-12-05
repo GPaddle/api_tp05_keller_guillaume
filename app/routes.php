@@ -3,19 +3,19 @@
 declare(strict_types=1);
 
 use App\Application\Actions\Category\ViewCategoryAction;
+use App\Application\Actions\Login\LoginAction;
 use App\Application\Actions\MetaData\ListMetaDataAction;
 use App\Application\Actions\MetaData\ViewMetaDataAction;
 use App\Application\Actions\Product\ListCategoriesAction;
 use App\Application\Actions\Product\ListProductsAction;
 use App\Application\Actions\Product\ViewProductAction;
+use App\Application\Actions\Register\RegisterAction;
 use App\Application\Actions\User\ListUsersAction;
 use App\Application\Actions\User\ViewUserAction;
-use Firebase\JWT\JWT;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
 use Slim\Interfaces\RouteCollectorProxyInterface as Group;
-
 
 return function (App $app) {
 
@@ -27,42 +27,13 @@ return function (App $app) {
             return $response;
         });
 
-        $token_jwt = null;
-
         $group->get('/home', function (Request $request, Response $response) {
             $response->getBody()->write('Hello world!');
             return $response;
         })->setName('home');
 
-        $group->post('/login', function (Request $request, Response $response) use (&$token_jwt) {
-
-            $data = $request->getParsedBody();
-
-            $userid = $data['password'] ?? null;
-
-            $email = $data['login'] ?? null;
-            $pseudo = $data['login'] ?? null;
-
-            $response->getBody()->write("Hello $email");
-
-            $issuedAt = time();
-            $expirationTime = $issuedAt + 600;
-
-            $payload = [
-                'userid' => $userid,
-                'email' => $email,
-                'pseudo' => $pseudo,
-                'iat' => $issuedAt,
-                'exp' => $expirationTime
-            ];
-
-            $token_jwt = JWT::encode($payload, getenv('JWT_SECRET'), "HS256");
-
-            $response = $response->withHeader("Authorization", "Bearer {$token_jwt}");
-
-            return $response;
-        })->setName('getLogin');
-
+        $group->post('/login', LoginAction::class)->setName('getLogin');
+        $group->post('/register', RegisterAction::class)->setName('getRegistration');
 
         $group->group('/user', function (Group $groupUsers) {
             $groupUsers->get('', ListUsersAction::class)->setName('getUsers');

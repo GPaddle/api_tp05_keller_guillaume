@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Domain\User;
@@ -28,17 +29,24 @@ class User implements JsonSerializable
     private $lastName;
 
     /**
+     * @var string
+     */
+    private $hashedPassword;
+
+    /**
      * @param int|null  $id
      * @param string    $username
      * @param string    $firstName
      * @param string    $lastName
+     * @param string    $hashedPassword
      */
-    public function __construct(?int $id, string $username, string $firstName, string $lastName)
+    public function __construct(?int $id, string $username, string $firstName, string $lastName, string $password)
     {
         $this->id = $id;
         $this->username = strtolower($username);
         $this->firstName = ucfirst($firstName);
         $this->lastName = ucfirst($lastName);
+        $this->hashedPassword = password_hash($password, PASSWORD_DEFAULT);
     }
 
     /**
@@ -74,6 +82,14 @@ class User implements JsonSerializable
     }
 
     /**
+     * @return string
+     */
+    public function getHashedPassword(): string
+    {
+        return $this->hashedPassword;
+    }
+
+    /**
      * @return array
      */
     public function jsonSerialize()
@@ -83,6 +99,7 @@ class User implements JsonSerializable
             'username' => $this->username,
             'firstName' => $this->firstName,
             'lastName' => $this->lastName,
+            'hashedPassword' => $this->hashedPassword,
         ];
     }
 }

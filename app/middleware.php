@@ -9,6 +9,7 @@ use Tuupola\Middleware\JwtAuthentication;
 
 return function (App $app) {
     $app->add(SessionMiddleware::class);
+    $app->addBodyParsingMiddleware();
 
     $app->add(CorsMiddleware::class);
 
