@@ -35,7 +35,7 @@ class LoginAction extends UserAction
         }
 
         $password = $data['password'];
-        $userHash = $user->getHashedPassword();
+        $userHash = $user->getAccount()->getHashedPassword();
 
         if (!password_verify($password, $userHash)) {
 

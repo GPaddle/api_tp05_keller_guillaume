@@ -16,17 +16,15 @@ class RegisterAction extends Action
     protected function action(): Response
     {
         $data = $this->request->getParsedBody();
-
-        $hashedPassword = password_hash($data['password'], PASSWORD_BCRYPT);
-
-        $pseudo = $data['login'];
+        
+        // $pseudo = $data['login'];
 
         $issuedAt = time();
         $expirationTime = $issuedAt + 600;
 
         $payload = [
-            'hashedPassword' => $hashedPassword,
-            'pseudo' => $pseudo,
+            // 'hashedPassword' => $hashedPassword,
+            // 'pseudo' => $pseudo,
             'iat' => $issuedAt,
             'exp' => $expirationTime
         ];

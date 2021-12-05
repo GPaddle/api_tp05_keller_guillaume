@@ -17,7 +17,7 @@ return function (App $app) {
         new JwtAuthentication(
             [
                 'path' => ['/'],
-                'ignore' => ['/api/login','/api/product'],
+                'ignore' => ['/api/login','/api/register','/api/product'],
                 'attribute' => 'token',
                 'secure' => false,
                 'header' => 'Authorization',

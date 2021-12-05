@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\User;
 
+use App\Domain\Account\Account;
+use App\Domain\Contact\Contact;
 use JsonSerializable;
 
 class User implements JsonSerializable
@@ -13,20 +15,13 @@ class User implements JsonSerializable
      */
     private $id;
 
-    /**
-     * @var string
-     */
-    private $username;
 
-    /**
-     * @var string
-     */
-    private $firstName;
-
-    /**
-     * @var string
-     */
-    private $lastName;
+    private string $firstName;
+    private string $lastName;
+    private string $civility;
+    private array $addresses;
+    private Contact $contact;
+    private Account $account;
 
     /**
      * @var string
@@ -35,18 +30,29 @@ class User implements JsonSerializable
 
     /**
      * @param int|null  $id
-     * @param string    $username
      * @param string    $firstName
      * @param string    $lastName
-     * @param string    $hashedPassword
+     * @param string    $civility
+     * @param array     $addresses
+     * @param Contact   $contact
+     * @param Account   $account
      */
-    public function __construct(?int $id, string $username, string $firstName, string $lastName, string $password)
-    {
+    public function __construct(
+        ?int $id,
+        string    $firstName,
+        string    $lastName,
+        string    $civility,
+        array     $addresses,
+        Contact   $contact,
+        Account   $account
+    ) {
         $this->id = $id;
-        $this->username = strtolower($username);
         $this->firstName = ucfirst($firstName);
         $this->lastName = ucfirst($lastName);
-        $this->hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $this->civility = ucfirst($civility);
+        $this->addresses = $addresses;
+        $this->contact = $contact;
+        $this->account = $account;
     }
 
     /**
@@ -57,36 +63,34 @@ class User implements JsonSerializable
         return $this->id;
     }
 
-    /**
-     * @return string
-     */
-    public function getUsername(): string
-    {
-        return $this->username;
-    }
-
-    /**
-     * @return string
-     */
     public function getFirstName(): string
     {
         return $this->firstName;
     }
 
-    /**
-     * @return string
-     */
     public function getLastName(): string
     {
         return $this->lastName;
     }
 
-    /**
-     * @return string
-     */
-    public function getHashedPassword(): string
+    public function getCivility(): string
     {
-        return $this->hashedPassword;
+        return $this->civility;
+    }
+
+    public function getAddresses(): array
+    {
+        return $this->addresses;
+    }
+
+    public function getContact(): Contact
+    {
+        return $this->contact;
+    }
+
+    public function getAccount(): Account
+    {
+        return $this->account;
     }
 
     /**
@@ -96,10 +100,12 @@ class User implements JsonSerializable
     {
         return [
             'id' => $this->id,
-            'username' => $this->username,
             'firstName' => $this->firstName,
             'lastName' => $this->lastName,
-            'hashedPassword' => $this->hashedPassword,
+            'civility' => $this->civility,
+            'addresses' => $this->addresses,
+            'contact' => $this->contact,
+            'account' => $this->account,
         ];
     }
 }
