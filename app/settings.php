@@ -39,12 +39,12 @@ return function (ContainerBuilder $containerBuilder) {
                         'metadata_dirs' => [APP_ROOT . '/src/Domain'],
 
                         'connection' => [
-                            'host' => $ini['db_host'],
-                            'driver' => $ini['db_driver'],
-                            'user' => $ini['db_user'],
-                            'password' => $ini['db_password'],
-                            'dbname' => $ini['db_dbname'],
-                            'port' => $ini['db_port'],
+                            'host' => $ini['db_host'] ?? getenv('db_host'),
+                            'driver' => $ini['db_driver'] ?? getenv('db_driver'),
+                            'user' => $ini['db_user'] ?? getenv('db_user'),
+                            'password' => $ini['db_password'] ?? getenv('db_password'),
+                            'dbname' => $ini['db_dbname'] ?? getenv('db_dbname'),
+                            'port' => $ini['db_port'] ?? getenv('db_port'),
                             'charset' => 'utf8'
                         ]
                     ]
