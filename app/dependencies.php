@@ -35,7 +35,7 @@ return function (ContainerBuilder $containerBuilder) {
         EntityManager::class => function (ContainerInterface $container): EntityManager {
             $settings = $container->get(SettingsInterface::class);
             
-            $config = Setup::createAnnotationMetadataConfiguration(
+            $config = Setup::createYAMLMetadataConfiguration(
                 $settings->get('doctrine')['metadata_dirs'],
                 $settings->get('doctrine')['dev_mode']
             );

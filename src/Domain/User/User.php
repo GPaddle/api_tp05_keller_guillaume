@@ -14,19 +14,35 @@ class User implements JsonSerializable
      * @var int|null
      */
     private $id;
-
-
-    private string $firstName;
-    private string $lastName;
-    private string $civility;
-    private array $addresses;
-    private Contact $contact;
-    private Account $account;
+    /**
+     * @var string
+     */
+    private  $firstName;
 
     /**
      * @var string
      */
-    private $hashedPassword;
+    private  $lastName;
+
+    /**
+     * @var string
+     */
+    private  $civility;
+
+    /**
+     * @var array
+     */
+    private  $addresses;
+
+    /**
+     * @var Contact
+     */
+    private  $contact;
+
+    /**
+     * @var Account
+     */
+    private  $account;
 
     /**
      * @param int|null  $id

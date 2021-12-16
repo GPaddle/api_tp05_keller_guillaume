@@ -16,8 +16,24 @@ class RegisterAction extends Action
     protected function action(): Response
     {
         $data = $this->request->getParsedBody();
-        
-        // $pseudo = $data['login'];
+
+        $login = $data['login'] ?? "";
+        $pass = $data['password'] ?? "";
+
+        if (!preg_match("/[A-Za-z0-9_]{2}(?:[A-Za-z0-9_]{2,})?/", $login)) {
+            $data = [
+                'message' => 'A problem occured during the authentication verification, please modify your Login'
+            ];
+
+            return $this->respondWithData($data, 401);
+        }
+        if (!preg_match("/[a-zA-Z0-9]{1,20}/", $pass)) {
+            $data = [
+                'message' => 'A problem occured during the authentication verification, please modify your Password'
+            ];
+
+            return $this->respondWithData($data, 401);
+        }
 
         $issuedAt = time();
         $expirationTime = $issuedAt + 600;
