@@ -7,7 +7,10 @@ use Doctrine\ORM\EntityManager;
 
 
 $isDevMode = true;
-$config = Setup::createYAMLMetadataConfiguration(array(__DIR__."/config/yaml"), $isDevMode);
+$proxyDir = null;
+$cache = null;
+$useSimpleAnnotationReader = false;
+$config = Setup::createAnnotationMetadataConfiguration(array(__DIR__ . "/src/Domain/Product"), $isDevMode, $proxyDir, $cache, $useSimpleAnnotationReader);
 
 // database configuration parameters
 $conn = array(
