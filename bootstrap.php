@@ -14,12 +14,12 @@ $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__ . "/src/Dom
 
 // database configuration parameters
 $conn = array(
-    'host' => $_ENV['DB_HOST'],
+    'host' => $_ENV['db_host'],
     'driver' => 'pdo_pgsql',
-    'user' => $_ENV['DB_USER'],
-    'password' => $_ENV['DB_PASS'],
-    'dbname' => $_ENV['DB_NAME'],
-    'port' => $_ENV['DB_PORT']
+    'user' => $_ENV['db_user'],
+    'password' => $_ENV['db_password'],
+    'dbname' => $_ENV['db_dbname'],
+    'port' => $_ENV['db_port']
 );
 
 // obtaining the entity manager

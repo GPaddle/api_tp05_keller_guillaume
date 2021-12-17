@@ -1,5 +1,4 @@
-set
-	transaction read write;
+set	transaction read write;
 
 DROP TABLE IF EXISTS Account;
 
