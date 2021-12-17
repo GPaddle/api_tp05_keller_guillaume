@@ -11,6 +11,9 @@ define('APP_ROOT', __DIR__);
 
 return function (ContainerBuilder $containerBuilder) {
 
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__.'/..');
+    $dotenv->load();
+
     // Global Settings Object
     $containerBuilder->addDefinitions([
         SettingsInterface::class => function () {

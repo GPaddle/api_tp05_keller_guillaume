@@ -5,11 +5,21 @@ declare(strict_types=1);
 namespace App\Application\Actions\Register;
 
 use App\Application\Actions\Action;
+use Doctrine\ORM\EntityManager;
 use Firebase\JWT\JWT;
 use Psr\Http\Message\ResponseInterface as Response;
 
+require_once __DIR__ . '/../../../../bootstrap.php';
+
 class RegisterAction extends Action
 {
+    private $em;
+
+    public function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -34,6 +44,10 @@ class RegisterAction extends Action
 
             return $this->respondWithData($data, 401);
         }
+
+        $utilisateurRepository = $this->em->getRepository('App\Domain\User');
+
+        $utilisateur = $utilisateurRepository->findOneBy(array('login' => $login, 'password' => $pass));
 
         $issuedAt = time();
         $expirationTime = $issuedAt + 600;
