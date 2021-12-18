@@ -4,56 +4,38 @@ declare(strict_types=1);
 
 namespace App\Domain\Account;
 
-use JsonSerializable;
+use App\Domain\User\User;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use PhpParser\Node\Expr\Cast\String_;
 
-class Account implements JsonSerializable
+class Account extends Model
 {
+	protected $table = 'accounts';
+	public $timestamps = false;
+
+	protected $fillable = [
+		'id',
+		'login_',
+		'hashedpassword',
+		'user_id',
+	];
+
 	/**
-	 * @var int|null
+	 * @var int
 	 */
 	private $id;
-	private $login;
-	private $hashedPassword;
+	private $login_;
+	private $hashedpassword;
+	private $user_id;
 
-	/**
-	 * @param int|null  $id
-	 * @param string    $login
-	 * @param string    $hashedPassword
-	 */
-	public function __construct(?int $id, string $login, string $password)
+	public function setHashedPasswordAttribute(String $password): void
 	{
-		$this->id = $id;
-		$this->login = $login;
-		$this->hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+		$this->attributes['hashedpassword'] = password_hash($password, PASSWORD_DEFAULT);
 	}
 
-	/**
-	 * @return int|null
-	 */
-	public function getId(): ?int
+	public function getUser() : BelongsTo
 	{
-		return $this->id;
-	}
-	
-	public function getLogin(): string
-	{
-		return $this->login;
-	}
-	
-	public function getHashedPassword(): string
-	{
-		return $this->hashedPassword;
-	}
-	
-	/**
-	 * @return array
-	 */
-	public function jsonSerialize()
-	{
-		return [
-			'id' => $this->id,
-			'login' => $this->login,
-			'hashedPassword' => $this->hashedPassword,
-		];
+		return $this->belongsTo(User::class);
 	}
 }

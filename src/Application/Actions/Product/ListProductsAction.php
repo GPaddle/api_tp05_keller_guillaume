@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Application\Actions\Product;
 
+use App\Domain\Product\Product;
 use Psr\Http\Message\ResponseInterface as Response;
 
 class ListProductsAction extends ProductAction
@@ -12,7 +13,8 @@ class ListProductsAction extends ProductAction
      */
     protected function action(): Response
     {
-        $products = $this->productRepository->findAll();
+        // $products = $this->productRepository->findAll();
+        $products = Product::all();
 
         $this->logger->info("Products list was viewed.");
 

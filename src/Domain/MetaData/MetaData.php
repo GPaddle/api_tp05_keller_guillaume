@@ -1,72 +1,47 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Domain\MetaData;
 
-use JsonSerializable;
+use App\Domain\Product\Product;
+use Illuminate\Database\Eloquent\Model;
 
-class MetaData implements JsonSerializable
+class MetaData extends Model
 {
+
+    protected $table = 'metadata';
+    public $timestamps = false;
+
+    protected $fillable = [
+        'id',
+        'name_',
+        'value_',
+        'product_id'
+    ];
+
     /**
-     * @var int|null
+     * @var int
      */
     private $id;
 
     /**
      * @var string
      */
-    private $name;
+    private $name_;
 
     /**
      * @var string
      */
-    private $value;
+    private $value_;
 
     /**
-     * @param int|null  $id
-     * @param string    $name
-     * @param string    $value
+     * @var int
      */
-    public function __construct(?int $id, string $name, string $value)
-    {
-        $this->id = $id;
-        $this->name = ucfirst($name);
-        $this->value = ucfirst($value);
-    }
+    private $product_id;
 
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
+    public function product()
     {
-        return $this->id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getMetaDataName(): string
-    {
-        return $this->name;
-    }
-    
-    /**
-     * @return string
-     */
-    public function getMetaDataValue(): string
-    {
-        return $this->value;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'value' => $this->value
-        ];
+        return $this->belongsTo(Product::class);
     }
 }

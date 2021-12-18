@@ -4,74 +4,45 @@ declare(strict_types=1);
 
 namespace App\Domain\Address;
 
-use JsonSerializable;
+use Illuminate\Database\Eloquent\Model;
 
-class Address implements JsonSerializable
+class Address extends Model
 {
+
+	protected $table = 'addresses';
+	public $timestamps = false;
+
+	protected $fillable = [
+		'id',
+		'street',
+		'postal_code',
+		'city',
+		'country',
+		'user_id',
+	];
+
 	/**
-	 * @var int|null
+	 * @var int
 	 */
 	private $id;
 	private $street;
-	private $postalCode;
+	private $postal_code;
 	private $city;
 	private $country;
+	private $user_id;
 
-	/**
-	 * @param int|null  $id
-	 * @param string    $street
-	 * @param string    $postalCode
-	 * @param string    $city
-	 * @param string    $country
-	 */
-	public function __construct(?int $id, string $street, string $postalCode, string $city, string $country)
-	{
-		$this->id = $id;
-		$this->street = $street;
-		$this->postalCode = $postalCode;
-		$this->city = ucfirst($city);
-		$this->country = ucfirst($country);
+	public function getUser(){
+		return $this->belongsTo(User::class);
 	}
 
-	/**
-	 * @return int|null
-	 */
-	public function getId(): ?int
-	{
-		return $this->id;
-	}
-	
-	public function getStreet(): string
-	{
-		return $this->street;
-	}
-	
-	public function getPostalCode(): string
-	{
-		return $this->postalCode;
-	}
-	
-	public function getCity(): string
-	{
-		return $this->city;
-	}
-	
-	public function getCountry(): string
-	{
-		return $this->country;
-	}
+	public function setCityAttribute(String $city): void
+    {
+        $this->attributes['city'] = ucfirst($city);
+    }
 
-	/**
-	 * @return array
-	 */
-	public function jsonSerialize()
-	{
-		return [
-			'id' => $this->id,
-			'street' => $this->street,
-			'postalCode' => $this->postalCode,
-			'city' => $this->city,
-			'country' => $this->country,
-		];
-	}
+	public function setCountryAttribute(String $country): void
+    {
+        $this->attributes['country'] = ucfirst($country);
+    }
+
 }

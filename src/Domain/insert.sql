@@ -1,29 +1,29 @@
 DELETE FROM
-	Account;
+	Accounts;
 
 DELETE FROM
-	User_;
+	Users;
 
 DELETE FROM
-	Address_;
+	Addresses;
 
 DELETE FROM
-	Contact;
+	Contacts;
 
 DELETE FROM
-	ProductCategory;
+	category_product;
 
 DELETE FROM
 	MetaData;
 
 DELETE FROM
-	Product;
+	Products;
 
 DELETE FROM
-	Category;
+	Categories;
 
 INSERT INTO
-	User_
+	Users
 VALUES
 	(1, 'Bill', 'Gates', 'Mr'),
 	(2, 'Steve', 'Jobs', 'Mr'),
@@ -32,22 +32,22 @@ VALUES
 	(5, 'Jack ', 'Dorsey ', 'Mr ');
 
 INSERT INTO
-	Account (idAccount, login_, hashedPassword, idUser)
+	Accounts (id, login_, hashedPassword, user_id)
 VALUES
-	(1, 'bill.gates', 'azerty', 1),
-	(2, 'steve.jobs', 'azerty', 2),
-	(3, 'mark.zuckerberg', 'azerty', 3),
-	(4, 'evan.spiegel', 'azerty', 4),
-	(5, 'jack.dorsey', 'azerty', 5);
+	(1, 'bill.gates', '$2y$10$S4FkXBHpxOu1W97QsBY4RenBUU6EzkpICWpuaGdsAeQKXOWcURyqO', 1), --azerty
+	(2, 'steve.jobs', '$2y$10$S4FkXBHpxOu1W97QsBY4RenBUU6EzkpICWpuaGdsAeQKXOWcURyqO', 2), --azerty
+	(3, 'mark.zuckerberg', '$2y$10$S4FkXBHpxOu1W97QsBY4RenBUU6EzkpICWpuaGdsAeQKXOWcURyqO', 3), --azerty
+	(4, 'evan.spiegel', '$2y$10$S4FkXBHpxOu1W97QsBY4RenBUU6EzkpICWpuaGdsAeQKXOWcURyqO', 4), --azerty
+	(5, 'jack.dorsey', '$2y$10$S4FkXBHpxOu1W97QsBY4RenBUU6EzkpICWpuaGdsAeQKXOWcURyqO', 5); --azerty
 
 INSERT INTO
-	Address_ (
-		idAddress,
+	Addresses (
+		id,
 		street,
-		postalCode,
+		postal_code,
 		city,
 		country,
-		idUser
+		user_id
 	)
 VALUES
 	(1, 'Microsoft street', '00000', 'Test', 'USA', 1),
@@ -57,7 +57,7 @@ VALUES
 	(5, 'Twitter street', '00000', 'Test', 'USA', 5);
 
 INSERT INTO
-	Contact (idContact, email, phoneNumber, idUser)
+	Contacts (id, email, phone_number, user_id)
 VALUES
 	(1, 'bill@gates.com', '0606060606', 1),
 	(2, 'steve@jobs.com', '0606060606', 2),
@@ -66,7 +66,7 @@ VALUES
 	(5, 'jack@dorsey.com', '0606060606', 5);
 
 INSERT INTO
-	Product (idProduct, title, description_, price, icon)
+	Products (id, title, description_, price, icon)
 VALUES
 	(
 		0,
@@ -179,7 +179,7 @@ VALUES
 	(24, 'Oignons', '🧅', 0.80, '🧅');
 
 INSERT INTO
-	Category (idCategory, name_)
+	Categories (id, name_)
 VALUES
 	(0, 'Fruit'),
 	(1, 'Agrume'),
@@ -191,7 +191,7 @@ VALUES
 	(7, 'Légume');
 
 INSERT INTO
-	MetaData (idMetaData, name_, value_, idProduct)
+	MetaData (id, name_, value_, product_id)
 VALUES
 	(0, 'Acidité', '+', 0),
 	(1, 'Sucre', '++', 0),
@@ -250,7 +250,7 @@ VALUES
 	);
 
 INSERT INTO
-	ProductCategory (idCategory, idProduct)
+	category_product (category_id, product_id)
 VALUES
 	(1, 0),
 	(0, 0),
@@ -302,3 +302,8 @@ VALUES
 	(7, 23),
 	(2, 24),
 	(7, 24);
+
+select
+	*
+from
+	products;

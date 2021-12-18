@@ -5,13 +5,34 @@ declare(strict_types=1);
 namespace App\Domain\User;
 
 use App\Domain\Account\Account;
+use App\Domain\Address\Address;
 use App\Domain\Contact\Contact;
-use JsonSerializable;
+use Illuminate\Database\Eloquent\Model;
 
-class User implements JsonSerializable
+class User extends Model
 {
+
+    protected $table = 'users';
+    protected $fillable = [
+        'id',
+        'firstName',
+        'lastName',
+        'civility',
+        'addresses',
+        'contact',
+        'account',
+    ];
+
+    protected $with = [
+        'addresses',
+        'contact',
+        'account',
+    ];
+
+    public $timestamps = false;
+
     /**
-     * @var int|null
+     * @var int
      */
     private $id;
     /**
@@ -30,7 +51,7 @@ class User implements JsonSerializable
     private  $civility;
 
     /**
-     * @var array
+     * @var Address[]
      */
     private  $addresses;
 
@@ -45,83 +66,55 @@ class User implements JsonSerializable
     private  $account;
 
     /**
-     * @param int|null  $id
-     * @param string    $firstName
-     * @param string    $lastName
-     * @param string    $civility
-     * @param array     $addresses
-     * @param Contact   $contact
-     * @param Account   $account
+     * @return int
      */
-    public function __construct(
-        ?int $id,
-        string    $firstName,
-        string    $lastName,
-        string    $civility,
-        array     $addresses,
-        Contact   $contact,
-        Account   $account
-    ) {
-        $this->id = $id;
-        $this->firstName = ucfirst($firstName);
-        $this->lastName = ucfirst($lastName);
-        $this->civility = ucfirst($civility);
-        $this->addresses = $addresses;
-        $this->contact = $contact;
-        $this->account = $account;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
+    public function setFirstNameAttribute(String $firstName): void
+    {
+        $this->attributes['firstname'] = ucfirst($firstName);
+    }
+
     public function getFirstName(): string
     {
-        return $this->firstName;
+        return $this->attributes['firstname'];
+    }
+
+    public function setLastNameAttribute(String $lastName): void
+    {
+        $this->attributes['lastname'] = ucfirst($lastName);
     }
 
     public function getLastName(): string
     {
-        return $this->lastName;
+        return $this->attributes['lastname'];
+    }
+
+    public function setCivilityAttribute(String $civility): void
+    {
+        $this->attributes['civility'] = ucfirst($civility);
     }
 
     public function getCivility(): string
     {
-        return $this->civility;
+        return $this->attributes['civility'];
     }
 
-    public function getAddresses(): array
+    public function addresses()
     {
-        return $this->addresses;
+        return $this->hasMany(Address::class);
     }
 
-    public function getContact(): Contact
+    public function contact()
     {
-        return $this->contact;
+        return $this->hasOne(Contact::class);
     }
 
-    public function getAccount(): Account
+    public function account()
     {
-        return $this->account;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return [
-            'id' => $this->id,
-            'firstName' => $this->firstName,
-            'lastName' => $this->lastName,
-            'civility' => $this->civility,
-            'addresses' => $this->addresses,
-            'contact' => $this->contact,
-            'account' => $this->account,
-        ];
+        return $this->hasOne(Account::class);
     }
 }

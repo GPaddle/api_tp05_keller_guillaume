@@ -1,79 +1,77 @@
-set	transaction read write;
+DROP TABLE IF EXISTS Accounts;
 
-DROP TABLE IF EXISTS Account;
+DROP TABLE IF EXISTS Addresses;
 
-DROP TABLE IF EXISTS Address_;
-
-DROP TABLE IF EXISTS Category;
-
-DROP TABLE IF EXISTS Contact;
+DROP TABLE IF EXISTS Contacts;
 
 DROP TABLE IF EXISTS MetaData;
 
-DROP TABLE IF EXISTS ProductCategory;
+DROP TABLE IF EXISTS category_product;
 
-DROP TABLE IF EXISTS Product;
+DROP TABLE IF EXISTS Categories;
 
-DROP TABLE IF EXISTS User_;
+DROP TABLE IF EXISTS Products;
 
-Create Table User_ (
-	idUser SERIAL PRIMARY KEY,
+DROP TABLE IF EXISTS Users;
+
+Create Table Users (
+	id SERIAL PRIMARY KEY,
 	firstName VARCHAR(256),
 	lastName VARCHAR(256),
 	civility VARCHAR(256)
 );
 
-Create Table Account (
-	idAccount SERIAL PRIMARY KEY,
+Create Table Accounts (
+	id SERIAL PRIMARY KEY,
 	login_ VARCHAR(20),
 	hashedPassword VARCHAR(256),
-	idUser INT,
-	CONSTRAINT fk_user FOREIGN KEY(idUser) REFERENCES User_(idUser)
+	user_id INT,
+	CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES Users(id)
 );
 
-Create Table Address_ (
-	idAddress SERIAL PRIMARY KEY,
+Create Table Addresses (
+	id SERIAL PRIMARY KEY,
 	street VARCHAR(256),
-	postalCode VARCHAR(5),
+	postal_code VARCHAR(5),
 	city VARCHAR(256),
 	country VARCHAR(256),
-	idUser INT,
-	CONSTRAINT fk_user FOREIGN KEY(idUser) REFERENCES User_(idUser)
+	user_id INT,
+	CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES Users(id)
 );
 
-Create Table Contact (
-	idContact SERIAL PRIMARY KEY,
+Create Table Contacts (
+	id SERIAL PRIMARY KEY,
 	email VARCHAR(256),
-	phoneNumber VARCHAR(20),
-	idUser INT,
-	CONSTRAINT fk_user FOREIGN KEY(idUser) REFERENCES User_(idUser)
+	phone_number VARCHAR(20),
+	user_id INT,
+	CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES Users(id)
 );
 
-Create Table Product (
-	idProduct SERIAL PRIMARY KEY,
+Create Table Products (
+	id SERIAL PRIMARY KEY,
 	title VARCHAR(256),
 	description_ VARCHAR(256),
 	price DECIMAL,
 	icon VARCHAR(4)
 );
 
-Create Table Category (
-	idCategory SERIAL PRIMARY KEY,
+Create Table Categories (
+	id SERIAL PRIMARY KEY,
 	name_ VARCHAR(256)
 );
 
 Create Table MetaData (
-	idMetaData SERIAL PRIMARY KEY,
+	id SERIAL PRIMARY KEY,
 	name_ VARCHAR(256),
 	value_ VARCHAR(256),
-	idProduct INT,
-	CONSTRAINT fk_product FOREIGN KEY(idProduct) REFERENCES Product(idProduct)
+	product_id INT,
+	CONSTRAINT fk_product FOREIGN KEY(product_id) REFERENCES Products(id)
 );
 
-Create Table ProductCategory (
-	idProductCategory SERIAL PRIMARY KEY,
-	idCategory INT,
-	idProduct INT,
-	CONSTRAINT fk_category FOREIGN KEY(idCategory) REFERENCES Category(idCategory),
-	CONSTRAINT fk_product FOREIGN KEY(idProduct) REFERENCES Product(idProduct)
+Create Table category_product (
+	id SERIAL PRIMARY KEY,
+	product_id INT,
+	category_id INT,
+	CONSTRAINT fk_category_pc FOREIGN KEY(category_id) REFERENCES Categories(id),
+	CONSTRAINT fk_product_pc FOREIGN KEY(product_id) REFERENCES Products(id)
 );

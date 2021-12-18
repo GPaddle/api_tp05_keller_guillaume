@@ -23,11 +23,11 @@ class InMemoryAddressRepository implements AddressRepository
 	public function __construct(array $addresses = null)
 	{
 		$this->addresses = $addresses ?? [
-			1 => new Address(1, "Microsoft street", "00000", "Test", "USA"),
-			2 => new Address(2, "Apple street", "00000", "Test", "USA"),
-			3 => new Address(3, "Facebook street", "00000", "Test", "USA"),
-			4 => new Address(4, "Snapchat street", "00000", "Test", "USA"),
-			5 => new Address(5, "Twitter street", "00000", "Test", "USA"),
+			1 => new Address([1, 'Microsoft street', '00000', 'Test', 'USA']),
+			2 => new Address([2, 'Apple street', '00000', 'Test', 'USA']),
+			3 => new Address([3, 'Facebook street', '00000', 'Test', 'USA']),
+			4 => new Address([4, 'Snapchat street', '00000', 'Test', 'USA']),
+			5 => new Address([5, 'Twitter street', '00000', 'Test', 'USA']),
 		];
 	}
 

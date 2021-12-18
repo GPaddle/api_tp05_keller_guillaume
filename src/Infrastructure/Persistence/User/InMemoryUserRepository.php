@@ -30,11 +30,11 @@ class InMemoryUserRepository implements UserRepository
         $accounts = (new InMemoryAccountRepository())->findAll();
 
         $this->users = $users ?? [
-            1 => new User(1, 'Bill', 'Gates', 'Mr', [$addresses[1]], $contacts[1], $accounts[1]),
-            2 => new User(2, 'Steve', 'Jobs', 'Mr', [$addresses[2]], $contacts[2], $accounts[2]),
-            3 => new User(3, 'Mark', 'Zuckerberg', 'Mr', [$addresses[3]], $contacts[3], $accounts[3]),
-            4 => new User(4, 'Evan', 'Spiegel', 'Mr', [$addresses[4]], $contacts[4], $accounts[4]),
-            5 => new User(5, 'Jack', 'Dorsey', 'Mr', [$addresses[5]], $contacts[5], $accounts[5]),
+            1 => new User([1, 'Bill', 'Gates', 'Mr', [$addresses[1]], $contacts[1], $accounts[1]]),
+            2 => new User([2, 'Steve', 'Jobs', 'Mr', [$addresses[2]], $contacts[2], $accounts[2]]),
+            3 => new User([3, 'Mark', 'Zuckerberg', 'Mr', [$addresses[3]], $contacts[3], $accounts[3]]),
+            4 => new User([4, 'Evan', 'Spiegel', 'Mr', [$addresses[4]], $contacts[4], $accounts[4]]),
+            5 => new User([5, 'Jack', 'Dorsey', 'Mr', [$addresses[5]], $contacts[5], $accounts[5]]),
         ];
     }
 
@@ -64,7 +64,7 @@ class InMemoryUserRepository implements UserRepository
     public function findUserByUsername(string $username): User
     {
         foreach ($this->users as $user) {
-            if ($user->getAccount()->getLogin() === $username) {
+            if ($user->getAccount()->getLogin_() === $username) {
                 return $user;
             }
         }

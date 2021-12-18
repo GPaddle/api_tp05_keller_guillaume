@@ -4,56 +4,29 @@ declare(strict_types=1);
 
 namespace App\Domain\Contact;
 
-use JsonSerializable;
+use Illuminate\Database\Eloquent\Model;
 
-class Contact implements JsonSerializable
+class Contact extends Model
 {
+	protected $table = 'contacts';
+	public $timestamps = false;
+
+	protected $fillable = [
+		'id',
+		'email',
+		'phone_number',
+		'user_id',
+	];
 	/**
-	 * @var int|null
+	 * @var int
 	 */
 	private $id;
 	private $email;
-	private $phoneNumber;
+	private $phone_number;
+	private $user_id;
 
-	/**
-	 * @param int|null  $id
-	 * @param string    $email
-	 * @param string    $phoneNumber
-	 */
-	public function __construct(?int $id, string $email, string $phoneNumber)
+	public function getUser()
 	{
-		$this->id = $id;
-		$this->email = $email;
-		$this->phoneNumber = $phoneNumber;
-	}
-
-	/**
-	 * @return int|null
-	 */
-	public function getId(): ?int
-	{
-		return $this->id;
-	}
-	
-	public function getEmail(): string
-	{
-		return $this->email;
-	}
-	
-	public function getPhoneNumber(): string
-	{
-		return $this->phoneNumber;
-	}
-	
-	/**
-	 * @return array
-	 */
-	public function jsonSerialize()
-	{
-		return [
-			'id' => $this->id,
-			'email' => $this->email,
-			'phoneNumber' => $this->phoneNumber,
-		];
+		return $this->belongsTo(User::class);
 	}
 }

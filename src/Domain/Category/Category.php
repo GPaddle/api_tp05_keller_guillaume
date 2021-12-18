@@ -1,56 +1,42 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Domain\Category;
 
-use JsonSerializable;
+use App\Domain\Product\Product;
+use App\Domain\ProductCategory\ProductCategory;
+use Illuminate\Database\Eloquent\Model;
 
-class Category implements JsonSerializable
+class Category extends Model
 {
+
+    protected $table = 'categories';
+    public $timestamps = false;
+
+    protected $fillable = [
+        'id',
+        'name_',
+    ];
+
     /**
-     * @var int|null
+     * @var int
      */
     private $id;
 
     /**
      * @var string
      */
-    private $name;
+    private $name_;
 
-    /**
-     * @param int|null  $id
-     * @param string    $name
-     */
-    public function __construct(?int $id, string $name)
+    public function product()
     {
-        $this->id = $id;
-        $this->name = ucfirst($name);
+        return $this->belongsToMany(Product::class);
     }
 
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
+    public function product_categories()
     {
-        return $this->id;
+        return $this->hasMany(ProductCategory::class);
     }
 
-    /**
-     * @return string
-     */
-    public function getCategoryName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize()
-    {
-        return [
-            'id' => $this->id,
-            'name' => $this->name
-        ];
-    }
 }

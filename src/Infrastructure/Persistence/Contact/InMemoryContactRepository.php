@@ -23,11 +23,11 @@ class InMemoryContactRepository implements ContactRepository
 	public function __construct(array $contacts = null)
 	{
 		$this->contacts = $contacts ?? [
-			1 => new Contact(1, 'bill@gates.com', '0606060606'),
-			2 => new Contact(2, 'steve@jobs.com', '0606060606'),
-			3 => new Contact(3, 'mark@zuckerberg.com', '0606060606'),
-			4 => new Contact(4, 'evan@spiegel.com', '0606060606'),
-			5 => new Contact(5, 'jack@dorsey.com', '0606060606'),
+			1 => new Contact([1, 'bill@gates.com', '0606060606']),
+			2 => new Contact([2, 'steve@jobs.com', '0606060606']),
+			3 => new Contact([3, 'mark@zuckerberg.com', '0606060606']),
+			4 => new Contact([4, 'evan@spiegel.com', '0606060606']),
+			5 => new Contact([5, 'jack@dorsey.com', '0606060606']),
 		];
 	}
 

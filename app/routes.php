@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Application\Actions\Address\AddAddressAction;
+use App\Application\Actions\Address\RemoveAddressAction;
 use App\Application\Actions\Category\ViewCategoryAction;
 use App\Application\Actions\Login\LoginAction;
 use App\Application\Actions\MetaData\ListMetaDataAction;
@@ -53,6 +55,11 @@ return function (App $app) {
         $group->group('/metaData', function (Group $groupMetaData) {
             $groupMetaData->get('', ListMetaDataAction::class)->setName('getMetaData');
             $groupMetaData->get('/{id:[0-9]+}', ViewMetaDataAction::class)->setName('getMetaDataByID');
+        });
+
+        $group->group('/address', function (Group $groupMetaData) {
+            $groupMetaData->post('', AddAddressAction::class)->setName('postAddress');
+            $groupMetaData->delete('/{id:[0-9]+}', RemoveAddressAction::class)->setName('deleteAddress');
         });
     });
 };

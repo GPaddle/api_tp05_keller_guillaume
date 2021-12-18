@@ -6,6 +6,7 @@ use App\Application\Handlers\ShutdownHandler;
 use App\Application\ResponseEmitter\ResponseEmitter;
 use App\Application\Settings\SettingsInterface;
 use DI\ContainerBuilder;
+use Illuminate\Database\Capsule\Manager;
 use Slim\Factory\AppFactory;
 use Slim\Factory\ServerRequestCreatorFactory;
 
@@ -71,6 +72,12 @@ $app->addRoutingMiddleware();
 // Add Error Middleware
 $errorMiddleware = $app->addErrorMiddleware($displayErrorDetails, $logError, $logErrorDetails);
 $errorMiddleware->setDefaultErrorHandler($errorHandler);
+
+$dbSettings = $settings->get('db');
+$capsule = new Manager();
+$capsule->addConnection($dbSettings);
+$capsule->bootEloquent();
+// $capsule->setAsGlobal();
 
 // Run App & Emit Response
 $response = $app->handle($request);

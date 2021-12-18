@@ -30,35 +30,6 @@ return function (ContainerBuilder $containerBuilder) {
             $logger->pushHandler($handler);
 
             return $logger;
-        },
-
-        EntityManager::class => function (ContainerInterface $container): EntityManager {
-            $settings = $container->get(SettingsInterface::class);
-            
-            $config = Setup::createYAMLMetadataConfiguration(
-                $settings->get('doctrine')['metadata_dirs'],
-                $settings->get('doctrine')['dev_mode']
-            );
-        
-            $config->setMetadataDriverImpl(
-                new AnnotationDriver(
-                    new AnnotationReader,
-                    $settings->get('doctrine')['metadata_dirs']
-                )
-            );
-        
-            $config->setMetadataCacheImpl(
-                new FilesystemCache(
-                    $settings->get('doctrine')['cache_dir']
-                )
-            );
-        
-            return EntityManager::create(
-                $settings->get('doctrine')['connection'],
-                $config
-            );
         }
-
-        
     ]);
 };
