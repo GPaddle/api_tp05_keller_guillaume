@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 use App\Application\Actions\Address\AddAddressAction;
 use App\Application\Actions\Address\RemoveAddressAction;
+use App\Application\Actions\Category\ListCategoriesAction;
 use App\Application\Actions\Category\ViewCategoryAction;
 use App\Application\Actions\Login\LoginAction;
 use App\Application\Actions\MetaData\ListMetaDataAction;
 use App\Application\Actions\MetaData\ViewMetaDataAction;
-use App\Application\Actions\Product\ListCategoriesAction;
 use App\Application\Actions\Product\ListProductsAction;
 use App\Application\Actions\Product\ViewProductAction;
 use App\Application\Actions\Register\RegisterAction;
@@ -20,7 +20,6 @@ use Slim\App;
 use Slim\Interfaces\RouteCollectorProxyInterface as Group;
 
 return function (App $app) {
-
 
     $app->group('/api', function (Group $group) {
 

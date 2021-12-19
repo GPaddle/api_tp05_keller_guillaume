@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Domain\Product;
 
 use App\Domain\Category\Category;
+use App\Domain\Category_Product\Category_Product;
 use App\Domain\MetaData\MetaData;
 use App\Domain\ProductCategory\ProductCategory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Capsule\Manager as DB;
 
 class Product extends Model
 {
@@ -17,31 +19,15 @@ class Product extends Model
         'title',
         'description_',
         'price',
-        'categories',
         'icon',
-        'metaData',
     ];
 
     protected $with = [
-        'categories',
-        'metadata'
+        'metadata',
+        'categories'
     ];
 
     public $timestamps = false;
-
-    public $id;
-    public $title;
-    public $description_;
-    public $price;
-    public $icon;
-    /**
-     * @var Category[] An Array of Categories     
-     */
-    public $categories;
-    /**
-     * @var MetaData[] An Array of metaData     
-     */
-    public $metaData;
 
     /**
      * @return Category[] get the related categories
@@ -51,13 +37,13 @@ class Product extends Model
         return $this->belongsToMany(Category::class);
     }
 
-    public function product_categories()
+    public function category_product()
     {
-        return $this->hasMany(ProductCategory::class);
+        return $this->hasMany(Category_Product::class);
     }
 
     /**
-     * @return MetaData[] get the related categories
+     * @return MetaData[] get the related metaData
      */
     public function metadata()
     {

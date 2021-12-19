@@ -72,6 +72,6 @@ Create Table category_product (
 	id SERIAL PRIMARY KEY,
 	product_id INT,
 	category_id INT,
-	CONSTRAINT fk_category_pc FOREIGN KEY(category_id) REFERENCES Categories(id),
-	CONSTRAINT fk_product_pc FOREIGN KEY(product_id) REFERENCES Products(id)
+	CONSTRAINT fk_product_pc FOREIGN KEY(product_id) REFERENCES Products(id),
+	CONSTRAINT fk_category_pc FOREIGN KEY(category_id) REFERENCES Categories(id)
 );

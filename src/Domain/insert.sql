@@ -20,7 +20,7 @@ DELETE FROM
 	Products;
 
 DELETE FROM
-	Categories;
+	categories;
 
 INSERT INTO
 	Users
@@ -34,12 +34,42 @@ VALUES
 INSERT INTO
 	Accounts (id, login_, hashedPassword, user_id)
 VALUES
-	(1, 'bill.gates', '$2y$10$S4FkXBHpxOu1W97QsBY4RenBUU6EzkpICWpuaGdsAeQKXOWcURyqO', 1), --azerty
-	(2, 'steve.jobs', '$2y$10$S4FkXBHpxOu1W97QsBY4RenBUU6EzkpICWpuaGdsAeQKXOWcURyqO', 2), --azerty
-	(3, 'mark.zuckerberg', '$2y$10$S4FkXBHpxOu1W97QsBY4RenBUU6EzkpICWpuaGdsAeQKXOWcURyqO', 3), --azerty
-	(4, 'evan.spiegel', '$2y$10$S4FkXBHpxOu1W97QsBY4RenBUU6EzkpICWpuaGdsAeQKXOWcURyqO', 4), --azerty
-	(5, 'jack.dorsey', '$2y$10$S4FkXBHpxOu1W97QsBY4RenBUU6EzkpICWpuaGdsAeQKXOWcURyqO', 5); --azerty
+	(
+		1,
+		'bill.gates',
+		'$2y$10$S4FkXBHpxOu1W97QsBY4RenBUU6EzkpICWpuaGdsAeQKXOWcURyqO',
+		1
+	),
+	--azerty
+	(
+		2,
+		'steve.jobs',
+		'$2y$10$S4FkXBHpxOu1W97QsBY4RenBUU6EzkpICWpuaGdsAeQKXOWcURyqO',
+		2
+	),
+	--azerty
+	(
+		3,
+		'mark.zuckerberg',
+		'$2y$10$S4FkXBHpxOu1W97QsBY4RenBUU6EzkpICWpuaGdsAeQKXOWcURyqO',
+		3
+	),
+	--azerty
+	(
+		4,
+		'evan.spiegel',
+		'$2y$10$S4FkXBHpxOu1W97QsBY4RenBUU6EzkpICWpuaGdsAeQKXOWcURyqO',
+		4
+	),
+	--azerty
+	(
+		5,
+		'jack.dorsey',
+		'$2y$10$S4FkXBHpxOu1W97QsBY4RenBUU6EzkpICWpuaGdsAeQKXOWcURyqO',
+		5
+	);
 
+--azerty
 INSERT INTO
 	Addresses (
 		id,
@@ -179,7 +209,7 @@ VALUES
 	(24, 'Oignons', '🧅', 0.80, '🧅');
 
 INSERT INTO
-	Categories (id, name_)
+	categories (id, name_)
 VALUES
 	(0, 'Fruit'),
 	(1, 'Agrume'),
@@ -250,58 +280,58 @@ VALUES
 	);
 
 INSERT INTO
-	category_product (category_id, product_id)
+	category_product (product_id, category_id)
 VALUES
-	(1, 0),
-	(0, 0),
-	(2, 1),
 	(0, 1),
-	(3, 2),
-	(0, 2),
+	(0, 0),
+	(1, 2),
+	(1, 0),
+	(2, 3),
+	(2, 0),
 	(3, 3),
-	(0, 3),
-	(3, 4),
-	(0, 4),
-	(4, 5),
-	(0, 5),
-	(1, 6),
-	(0, 6),
-	(2, 7),
-	(0, 7),
-	(2, 8),
-	(0, 8),
-	(2, 9),
-	(0, 9),
-	(5, 10),
-	(0, 10),
-	(2, 11),
-	(7, 11),
-	(6, 12),
-	(0, 12),
-	(5, 13),
-	(0, 13),
-	(5, 14),
-	(0, 14),
-	(2, 15),
-	(7, 15),
-	(5, 16),
-	(7, 16),
-	(2, 17),
-	(7, 17),
-	(2, 18),
-	(7, 18),
-	(2, 19),
-	(7, 19),
-	(5, 20),
-	(7, 20),
-	(2, 21),
-	(7, 21),
-	(2, 22),
-	(7, 22),
-	(2, 23),
-	(7, 23),
-	(2, 24),
-	(7, 24);
+	(3, 0),
+	(4, 3),
+	(4, 0),
+	(5, 4),
+	(5, 0),
+	(6, 1),
+	(6, 0),
+	(7, 2),
+	(7, 0),
+	(8, 2),
+	(8, 0),
+	(9, 2),
+	(9, 0),
+	(10, 5),
+	(10, 0),
+	(11, 2),
+	(11, 7),
+	(12, 6),
+	(12, 0),
+	(13, 5),
+	(13, 0),
+	(14, 5),
+	(14, 0),
+	(15, 2),
+	(15, 7),
+	(16, 5),
+	(16, 7),
+	(17, 2),
+	(17, 7),
+	(18, 2),
+	(18, 7),
+	(19, 2),
+	(19, 7),
+	(20, 5),
+	(20, 7),
+	(21, 2),
+	(21, 7),
+	(22, 2),
+	(22, 7),
+	(23, 2),
+	(23, 7),
+	(24, 2),
+	(24, 7);
 
 select
 	*

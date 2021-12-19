@@ -77,7 +77,7 @@ $dbSettings = $settings->get('db');
 $capsule = new Manager();
 $capsule->addConnection($dbSettings);
 $capsule->bootEloquent();
-// $capsule->setAsGlobal();
+$capsule->setAsGlobal();
 
 // Run App & Emit Response
 $response = $app->handle($request);
