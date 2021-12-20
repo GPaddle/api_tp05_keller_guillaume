@@ -20,26 +20,6 @@ class MetaData extends Model
         'product_id'
     ];
 
-    /**
-     * @var int
-     */
-    private $id;
-
-    /**
-     * @var string
-     */
-    private $name_;
-
-    /**
-     * @var string
-     */
-    private $value_;
-
-    /**
-     * @var int
-     */
-    private $product_id;
-
     public function product()
     {
         return $this->belongsTo(Product::class);

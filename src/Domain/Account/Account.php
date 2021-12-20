@@ -21,14 +21,6 @@ class Account extends Model
 		'user_id',
 	];
 
-	/**
-	 * @var int
-	 */
-	private $id;
-	private $login_;
-	private $hashedpassword;
-	private $user_id;
-
 	public function setHashedPasswordAttribute(String $password): void
 	{
 		$this->attributes['hashedpassword'] = password_hash($password, PASSWORD_DEFAULT);

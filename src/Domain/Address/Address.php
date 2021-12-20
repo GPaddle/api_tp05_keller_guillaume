@@ -21,16 +21,6 @@ class Address extends Model
 		'user_id',
 	];
 
-	/**
-	 * @var int
-	 */
-	private $id;
-	private $street;
-	private $postal_code;
-	private $city;
-	private $country;
-	private $user_id;
-
 	public function getUser(){
 		return $this->belongsTo(User::class);
 	}

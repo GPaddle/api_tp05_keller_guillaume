@@ -19,6 +19,15 @@ class Category extends Model
         'name_',
     ];
 
+    protected $hidden = [
+        'pivot',
+        'name_'
+    ];
+
+    protected $appends = [
+        'name'
+    ];
+
     public function products()
     {
         return $this->belongsToMany(Product::class);
@@ -27,5 +36,10 @@ class Category extends Model
     public function category_product()
     {
         return $this->hasMany(Category_Product::class);
+    }
+
+    public function getNameAttribute()
+    {
+        return $this->attributes['name_'];
     }
 }

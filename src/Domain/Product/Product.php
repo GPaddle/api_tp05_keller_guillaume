@@ -27,6 +27,10 @@ class Product extends Model
         'categories'
     ];
 
+    protected $casts = [
+        'price' => 'double',
+    ];
+
     public $timestamps = false;
 
     /**

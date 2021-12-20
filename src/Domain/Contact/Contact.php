@@ -17,13 +17,6 @@ class Contact extends Model
 		'phone_number',
 		'user_id',
 	];
-	/**
-	 * @var int
-	 */
-	private $id;
-	private $email;
-	private $phone_number;
-	private $user_id;
 
 	public function getUser()
 	{

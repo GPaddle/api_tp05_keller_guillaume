@@ -19,20 +19,6 @@ class Category_Product extends Model
 	];
 	public $timestamps = false;
 
-	/**
-	 * @var int
-	 */
-	private $id;
-	/**
-	 * @var int
-	 */
-	private  $product_id;
-
-	/**
-	 * @var int
-	 */
-	private  $category_id;
-
 	public function product()
 	{
 		return $this->belongsTo(Product::class);
