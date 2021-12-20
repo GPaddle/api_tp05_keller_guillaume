@@ -21,11 +21,11 @@ class Category extends Model
 
     protected $hidden = [
         'pivot',
-        'name_'
+        // 'name_'
     ];
 
     protected $appends = [
-        'name'
+        // 'name'
     ];
 
     public function products()
@@ -38,8 +38,8 @@ class Category extends Model
         return $this->hasMany(Category_Product::class);
     }
 
-    public function getNameAttribute()
-    {
-        return $this->attributes['name_'];
-    }
+    // public function getNameAttribute()
+    // {
+    //     return $this->attributes['name_'];
+    // }
 }
