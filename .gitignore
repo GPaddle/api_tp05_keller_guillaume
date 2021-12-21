@@ -9,3 +9,6 @@
 *.sh
 
 .env
+.env.local
+
+data/

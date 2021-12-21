@@ -10,7 +10,8 @@ $isDevMode = true;
 $proxyDir = null;
 $cache = null;
 $useSimpleAnnotationReader = false;
-$config = Setup::createAnnotationMetadataConfiguration(array(__DIR__ . "/src/Domain"), $isDevMode, $proxyDir, $cache, $useSimpleAnnotationReader);
+$config = Setup::createYAMLMetadataConfiguration(array(__DIR__."/config/yaml"), $isDevMode);
+// $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__ . "/src/Domain"), $isDevMode, $proxyDir, $cache, $useSimpleAnnotationReader);
 
 
 // database configuration parameters
