@@ -1,0 +1,38 @@
+App\Domain\Products:
+    type: entity
+    table: products
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        title:
+            type: string
+            nullable: true
+            length: 256
+            options:
+                fixed: false
+        description:
+            type: string
+            nullable: true
+            length: 256
+            options:
+                fixed: false
+            column: description_
+        price:
+            type: decimal
+            nullable: true
+            precision: 10
+            scale: 0
+        icon:
+            type: string
+            nullable: true
+            length: 4
+            options:
+                fixed: false
+    lifecycleCallbacks: {  }

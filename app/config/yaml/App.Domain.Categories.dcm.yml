@@ -1,0 +1,21 @@
+App\Domain\Categories:
+    type: entity
+    table: categories
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        name:
+            type: string
+            nullable: true
+            length: 256
+            options:
+                fixed: false
+            column: name_
+    lifecycleCallbacks: {  }

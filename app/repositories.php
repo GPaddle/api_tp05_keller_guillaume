@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-use App\Domain\Category\CategoryRepository;
-use App\Domain\MetaData\MetaDataRepository;
-use App\Domain\Product\ProductRepository;
-use App\Domain\User\UserRepository;
+//use App\Domain\Category\CategoryRepository;
+//use App\Domain\MetaData\MetaDataRepository;
+//use App\Domain\Product\ProductRepository;
+//use App\Domain\User\UserRepository;
 use App\Infrastructure\Persistence\Category\InMemoryCategoryRepository;
 use App\Infrastructure\Persistence\MetaData\InMemoryMetaDataRepository;
 use App\Infrastructure\Persistence\Product\InMemoryProductRepository;

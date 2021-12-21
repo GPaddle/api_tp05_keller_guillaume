@@ -6,6 +6,7 @@ namespace App\Application\Actions;
 
 use App\Domain\DomainException\DomainRecordNotFoundException;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Tools\Setup;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -36,13 +37,18 @@ abstract class Action
     protected $args;
 
     /**
-     * @param ContainerInterface $container
+     * @var EntityManager
+     */
+    protected static $entityManager = null;
+
+    /**
      * @param LoggerInterface $logger
      * @param EntityManager $em
      */
-    public function __construct(LoggerInterface $logger)
+    public function __construct(LoggerInterface $logger, EntityManager $em = null)
     {
         $this->logger = $logger;
+        self::$entityManager = self::createEntityManager();
     }
 
     /**
@@ -144,5 +150,49 @@ abstract class Action
         return $this->response
             ->withHeader('Content-Type', 'application/json')
             ->withStatus($payload->getStatusCode());
+    }
+
+    /**
+     * @return EntityManager
+     */
+    public static function createEntityManager()
+    {
+        if (!is_null(self::$entityManager)) {
+            return self::$entityManager;
+        }
+
+        $devMode = true;
+
+        $path = __DIR__ . "/../../../app/config/yaml";
+
+        $config = Setup::createYAMLMetadataConfiguration(array($path), $devMode);
+
+        // define credentials...
+        $connectionOptions = array(
+            'host' => getenv('db_host'),
+            'driver' => getenv('db_driver'),
+            'user' => getenv('db_user'),
+            'password' => getenv('db_password'),
+            'dbname' => getenv('db_dbname'),
+            'port' => getenv('db_port')
+        );
+
+        self::$entityManager = EntityManager::create($connectionOptions, $config);
+
+        return self::$entityManager;
+    }
+
+    protected function sendError(String $message)
+    {
+        $data = [
+            'message' => ucfirst($message)
+        ];
+
+        return $this->respondWithData($data, 422);
+    }
+
+    protected function describe($item)
+    {
+		return is_null($item) ? [] : $item->getAsArray();
     }
 }

@@ -1,0 +1,41 @@
+App\Domain\CategoryProduct:
+    type: entity
+    table: category_product
+    indexes:
+        IDX_149244D34584665A:
+            columns:
+                - product_id
+        IDX_149244D312469DE2:
+            columns:
+                - category_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    manyToOne:
+        product:
+            targetEntity: Products
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                product_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        category:
+            targetEntity: Categories
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                category_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

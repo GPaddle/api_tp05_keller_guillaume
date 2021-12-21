@@ -27,9 +27,31 @@ return function (ContainerBuilder $containerBuilder) {
                     ],
                     "determineRouteBeforeAppMiddleware" => true,
 
+                    'doctrine' => [
+                        // if true, metadata caching is forcefully disabled
+                        'dev_mode' => true,
+
+                        // path where the compiled metadata info will be cached
+                        // make sure the path exists and it is writable
+                        'cache_dir' => APP_ROOT . '/var/cache',
+
+                        // you should add any other path containing annotated entity classes
+                        'metadata_dirs' => [APP_ROOT . '/src/Domain'],
+
+                        'connection' => [
+                            'host' => getenv('db_host'),
+                            'driver' => getenv('db_driver'),
+                            'user' => getenv('db_user'),
+                            'password' => getenv('db_password'),
+                            'dbname' => getenv('db_dbname'),
+                            'port' => getenv('db_port'),
+                            'charset' => 'utf8'
+                        ]
+                    ],
+
                     'db' => [
                         'host' => getenv('db_host'),
-                        'driver' => 'pgsql',
+                        'driver' => getenv('db_driver'),
                         'username' => getenv('db_user'),
                         'password' => getenv('db_password'),
                         'database' => getenv('db_dbname'),

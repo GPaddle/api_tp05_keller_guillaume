@@ -1,0 +1,54 @@
+App\Domain\Addresses:
+    type: entity
+    table: addresses
+    indexes:
+        IDX_6FCA7516A76ED395:
+            columns:
+                - user_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        street:
+            type: string
+            nullable: true
+            length: 256
+            options:
+                fixed: false
+        postalCode:
+            type: string
+            nullable: true
+            length: 5
+            options:
+                fixed: false
+            column: postal_code
+        city:
+            type: string
+            nullable: true
+            length: 256
+            options:
+                fixed: false
+        country:
+            type: string
+            nullable: true
+            length: 256
+            options:
+                fixed: false
+    manyToOne:
+        user:
+            targetEntity: Users
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                user_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

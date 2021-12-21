@@ -55,7 +55,7 @@
             "App\\": "src/"
         },
         "psr-0": {
-            "": "src/"
+            "": "src/Domain"
         }
     },
     "autoload-dev": {

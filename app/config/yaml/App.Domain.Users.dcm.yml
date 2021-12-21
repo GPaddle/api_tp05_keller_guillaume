@@ -1,0 +1,32 @@
+App\Domain\Users:
+    type: entity
+    table: users
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        firstname:
+            type: string
+            nullable: true
+            length: 256
+            options:
+                fixed: false
+        lastname:
+            type: string
+            nullable: true
+            length: 256
+            options:
+                fixed: false
+        civility:
+            type: string
+            nullable: true
+            length: 256
+            options:
+                fixed: false
+    lifecycleCallbacks: {  }

@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Application\Actions\Address;
 
 use App\Application\Actions\Action;
-use App\Domain\Address\Address;
+use App\Domain\Addresses;
+use App\Domain\Users;
+//use App\Domain\Address\Address;
 use Psr\Http\Message\ResponseInterface as Response;
 
 class AddAddressAction extends Action
@@ -15,8 +17,6 @@ class AddAddressAction extends Action
 	 */
 	protected function action(): Response
 	{
-		// $metadata = $this->metadataRepository->findAll();
-
 		$data = $this->request->getParsedBody();
 
 		$address = $data['address'];
@@ -31,28 +31,19 @@ class AddAddressAction extends Action
 			return $this->sendError('Country error');
 		}
 
-		$city = $data['address']['city'];
-		$country = $data['address']['country'];
-		$postalCode = $data['address']['postal_code'];
-		$street = $data['address']['street'];
+		$addressObject = new Addresses();
 
-		$address = Address::create([
-			'street'=>$street,
-			'postal_code'=>$postalCode,
-			'city'=>$city,
-			'country'=>$country,
-			'user_id'=>$data['user_id'],
-		]);
+		$user = self::$entityManager->getRepository(Users::class)->findOneBy(['id' => $data['user_id']]);
 
-		return $this->respondWithData($address);
-	}
+		$addressObject->setStreet($address['street']);
+		$addressObject->setPostalCode($address['postal_code']);
+		$addressObject->setCity($address['city']);
+		$addressObject->setCountry($address['country']);
+		$addressObject->setUser($user);
 
-	protected function sendError(String $message)
-	{
-		$data = [
-			'message' => ucfirst($message)
-		];
+		self::$entityManager->persist($addressObject);
+		self::$entityManager->flush();
 
-		return $this->respondWithData($data, 422);
+		return $this->respondWithData($addressObject->getAsArray());
 	}
 }

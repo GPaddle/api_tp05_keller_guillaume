@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace App\Application\Actions\Category;
 
-use App\Domain\Category\Category;
+//use App\Domain\Category\Category;
+
+use App\Application\Actions\Action;
+use App\Domain\Categories;
 use Psr\Http\Message\ResponseInterface as Response;
 
-class ViewCategoryAction extends CategoryAction
+class ViewCategoryAction extends Action
 {
     /**
      * {@inheritdoc}
@@ -16,10 +19,12 @@ class ViewCategoryAction extends CategoryAction
     {
         $categoryId = (int) $this->resolveArg('id');
         // $category = $this->categoryRepository->findCategoryOfId($categoryId);
-        $category = Category::find($categoryId);
+        // $category = Category::find($categoryId);
+        $category = self::$entityManager->getRepository(Categories::class)->findOneBy(['id' => $categoryId]);
+
 
         $this->logger->info("Category of id `${categoryId}` was viewed.");
 
-        return $this->respondWithData($category);
+        return $this->respondWithData($category->getAsArray());
     }
 }

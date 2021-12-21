@@ -17,7 +17,7 @@ $config = Setup::createYAMLMetadataConfiguration(array(__DIR__."/config/yaml"), 
 // database configuration parameters
 $conn = array(
     'host' => getenv('db_host'),
-    'driver' => 'pdo_pgsql',
+    'driver' => getenv('db_driver'),
     'user' => getenv('db_user'),
     'password' => getenv('db_password'),
     'dbname' => getenv('db_dbname'),

@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\Application\Actions\Category;
 
 use App\Application\Actions\Action;
-use App\Domain\Category\Category;
+use App\Domain\Categories;
+//use App\Domain\Category\Category;
 use Psr\Http\Message\ResponseInterface as Response;
 
 class ListCategoriesAction extends Action
@@ -15,8 +16,10 @@ class ListCategoriesAction extends Action
      */
     protected function action(): Response
     {
-        // $categories = $this->categoryRepository->findAll();
-        $categories = Category::all();
+        // $categories = Category::all();
+        $categories = self::$entityManager->getRepository(Categories::class)->findAll();
+        $categories = array_map([$this, 'describe'], $categories);
+
 
         $this->logger->info("Categories list was viewed.");
 

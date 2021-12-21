@@ -1,0 +1,43 @@
+App\Domain\Metadata:
+    type: entity
+    table: metadata
+    indexes:
+        IDX_4F1434144584665A:
+            columns:
+                - product_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        name:
+            type: string
+            nullable: true
+            length: 256
+            options:
+                fixed: false
+            column: name_
+        value:
+            type: string
+            nullable: true
+            length: 256
+            options:
+                fixed: false
+            column: value_
+    manyToOne:
+        product:
+            targetEntity: Products
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                product_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }
