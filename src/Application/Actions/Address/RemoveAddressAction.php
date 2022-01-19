@@ -16,10 +16,18 @@ class RemoveAddressAction extends Action
 	 */
 	protected function action(): Response
 	{
-        $addressId = (int) $this->resolveArg('id');
+		$addressId = (int) $this->resolveArg('id');
+
+		if ($addressId < 0) {
+			return $this->respondWithData("Id $addressId is not possible", 422);
+		}
 
 		// $address = Address::find($addressId);
 		$address = self::$entityManager->getRepository(Addresses::class)->findOneBy(['id' => $addressId]);
+
+		if (is_null($address)) {
+			return $this->respondWithData("Researched address is not found", 422);
+		}
 
 		self::$entityManager->remove($address);
 		self::$entityManager->flush();

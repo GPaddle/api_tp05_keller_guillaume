@@ -44,7 +44,7 @@ class RegisterAction extends Action
         }
 
         $pass = $data['account']['password'] ?? "";
-        if (!preg_match("/[a-zA-Z0-9]{1,20}/", $pass)) {
+        if (!preg_match("/.{5}.*/", $pass)) {
             return $this->sendError('A problem occured during the authentication verification, please modify your Password');
         }
 
@@ -62,7 +62,7 @@ class RegisterAction extends Action
             return $this->sendError('Email error');
         }
 
-        if (!preg_match("/[0-9]{10}/", $data['contact']['phoneNumber'])) {
+        if (!preg_match("/[0-9]{10}|\\+33[0-9]{9}/", $data['contact']['phoneNumber'])) {
             return $this->sendError('Phone number error');
         }
 
@@ -87,7 +87,7 @@ class RegisterAction extends Action
             if (!preg_match("/[0-9]{5}/", $address['postal_code'])) {
                 return $this->sendError('Postal code error');
             }
-            if (!preg_match("/[A-Z][a-z]+/", $address['city'])) {
+            if (!preg_match("/([a-zA-Z\\u0080-\\u024F]+(?:. |-| |'))*[a-zA-Z\\u0080-\\u024F]*/", $address['city'])) {
                 return $this->sendError('City error');
             }
             if (!preg_match("/[A-Z][a-z]+/", $address['country'])) {

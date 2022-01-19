@@ -18,6 +18,11 @@ class ViewCategoryAction extends Action
     protected function action(): Response
     {
         $categoryId = (int) $this->resolveArg('id');
+
+        if ($categoryId < 0) {
+            return $this->respondWithData("Id $categoryId is not possible", 422);
+        }
+
         // $category = $this->categoryRepository->findCategoryOfId($categoryId);
         // $category = Category::find($categoryId);
         $category = self::$entityManager->getRepository(Categories::class)->findOneBy(['id' => $categoryId]);

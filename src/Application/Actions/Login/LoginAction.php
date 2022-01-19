@@ -25,6 +25,10 @@ class LoginAction extends Action
 
         $pseudo = $data['login'];
 
+        if (!preg_match("/[A-Za-z0-9_]{2}(?:[A-Za-z0-9_]{2,})?/", $pseudo)) {
+            return $this->sendError('A problem occured during the login verification, please modify your Login');
+        }
+
         try {
             $accountRepository = self::$entityManager->getRepository(Accounts::class);
     
@@ -46,6 +50,11 @@ class LoginAction extends Action
         }
 
         $password = $data['password'];
+
+        if (!preg_match("/[a-zA-Z0-9]{1,20}/", $password)) {
+            return $this->sendError('A problem occured during the authentication verification, please modify your Password');
+        }
+
         $userHash = $userAccount->getHashedpassword();
 
         if (!password_verify($password, $userHash)) {

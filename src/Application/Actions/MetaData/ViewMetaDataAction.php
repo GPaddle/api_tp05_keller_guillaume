@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Application\Actions\MetaData;
@@ -15,6 +16,11 @@ class ViewMetaDataAction extends Action
     protected function action(): Response
     {
         $metaDataId = (int) $this->resolveArg('id');
+
+        if ($metaDataId < 0) {
+            return $this->respondWithData("Id $metaDataId is not possible", 422);
+        }
+
         // $metaData = $this->metaDataRepository->findMetaDataOfId($metaDataId);
         // $metaData = MetaData::find($metaDataId);
         $metaData = self::$entityManager->getRepository(Metadata::class)->findOneBy(['id' => $metaDataId]);
